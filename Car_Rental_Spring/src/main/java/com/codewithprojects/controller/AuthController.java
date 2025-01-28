@@ -4,10 +4,15 @@ import com.codewithprojects.dto.LoginRequest;
 import com.codewithprojects.dto.SignupRequest;
 import com.codewithprojects.dto.UserDto;
 import com.codewithprojects.services.auth.AuthService;
+import com.codewithprojects.services.auth.UserDetailsImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,15 +40,23 @@ public class AuthController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
-            // Authenticate user
             Authentication authentication = authService.authenticateUser(loginRequest);
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            // Return success response (you can include user details or token here if needed)
-            return ResponseEntity.ok("Login successful");
+            // Store user info in session
+            session.setAttribute("USER_ID", userDetails.getUsername());
+
+            // Create response object
+            Map<String, Object> response = new HashMap<>();
+            response.put("email", userDetails.getUsername());
+            response.put("message", "Login successful");
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Invalid email or password"));
         }
     }
 
