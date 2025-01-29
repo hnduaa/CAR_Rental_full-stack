@@ -33,10 +33,13 @@ public class AuthServiceImpl implements AuthService {
         user.setFirstname(signupRequest.getFirstname());
         user.setLastname(signupRequest.getLastname());
         user.setEmail(signupRequest.getEmail());
-
-        // Encrypt the password before saving
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         user.setUserRole(UserRole.CUSTOMER);
+
+        // New fields
+        user.setPhoneNumber(signupRequest.getPhoneNumber());
+        user.setAge(signupRequest.getAge());
+        user.setGender(signupRequest.getGender());
 
         // Save user to the database
         User createdUser = userRepository.save(user);
@@ -69,5 +72,4 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid email or password");
         }
     }
-
 }

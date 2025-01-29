@@ -18,6 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findFirstByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        return UserDetailsImpl.build(user);
+
+        return UserDetailsImpl.build(user); // Returns UserDetails with phone number included
     }
 }

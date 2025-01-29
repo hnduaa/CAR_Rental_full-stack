@@ -35,6 +35,10 @@ public class UserDetailsImpl implements UserDetails {
         return user.getEmail();
     }
 
+    public String getPhoneNumber() {  // ✅ Added phone number getter
+        return user.getPhoneNumber();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

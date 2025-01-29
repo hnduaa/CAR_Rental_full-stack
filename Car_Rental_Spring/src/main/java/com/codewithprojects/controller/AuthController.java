@@ -27,6 +27,9 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signupCustomer(@RequestBody SignupRequest signupRequest) {
         try {
+            // Log the incoming signupRequest
+            System.out.println("Received signup request: " + signupRequest.getFirstname() + " " + signupRequest.getLastname());
+
             if (authService.hasCustomerWithEmail(signupRequest.getEmail())) {
                 return new ResponseEntity<>("Customer already exists with this email", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -39,6 +42,7 @@ public class AuthController {
             );
         }
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {

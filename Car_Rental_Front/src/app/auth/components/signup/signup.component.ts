@@ -14,7 +14,7 @@ import { AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterModule,CommonModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, ReactiveFormsModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
@@ -32,9 +32,12 @@ export class SignupComponent {
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]], // Add phone validation
       password: ['', [Validators.required, Validators.minLength(4)]],
       confirmPassword: ['', Validators.required],
       termsAccepted: [false, Validators.requiredTrue],
+      gender: ['', Validators.required], // Added gender field
+      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]], // Added age field
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -53,9 +56,16 @@ export class SignupComponent {
     this.submitted = true;
   
     if (this.signupForm.valid) {
-      const { firstName, lastName, email, password } = this.signupForm.value;
-  
-      const signupRequest = { firstname: firstName, lastname: lastName, email, password };
+      const { firstName, lastName, email, phoneNumber, password, gender, age } = this.signupForm.value;
+      const signupRequest = {
+        firstname: firstName,  // matched to backend
+        lastname: lastName,    // matched to backend
+        email,
+        phoneNumber,
+        password,
+        gender,
+        age
+      };      
   
       this.authService.register(signupRequest).subscribe({
         next: () => {
@@ -66,8 +76,7 @@ export class SignupComponent {
       });
     }
   }
-  
-  // Gestion des erreurs
+  // Handle errors
   private handleError(error: any) {
     console.error('Signup error:', error);
   
@@ -77,7 +86,6 @@ export class SignupComponent {
       this.errorMessage = 'Registration failed. Please try again.';
     }
   }
-  
   
   // Getter methods for template access
   get f() {

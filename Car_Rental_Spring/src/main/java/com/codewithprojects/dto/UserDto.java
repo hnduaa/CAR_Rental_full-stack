@@ -5,7 +5,16 @@ public class UserDto {
     private String firstname;
     private String lastname;
     private String email;
+    private String phoneNumber; // Add phone number
 
+    // Getter and Setter for phoneNumber
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     // Getter and Setter for id
     public Long getId() {
         return id;

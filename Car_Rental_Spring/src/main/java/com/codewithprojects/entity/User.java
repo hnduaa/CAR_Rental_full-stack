@@ -1,10 +1,12 @@
 package com.codewithprojects.entity;
 
 import com.codewithprojects.enums.UserRole;
+import com.codewithprojects.enums.Gender;
 import jakarta.persistence.*;
 
-@Entity
+import java.time.LocalDateTime;
 
+@Entity
 @Table(name = "users")
 public class User {
     @Id
@@ -15,11 +17,23 @@ public class User {
     private String lastname;
     private String email;
     private String password;
+    private String phoneNumber;
+    private int age;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    // Getter and Setter for id
+    private LocalDateTime createdAt;
+
+    // Constructor
+    public User() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -28,7 +42,6 @@ public class User {
         this.id = id;
     }
 
-    // Getter and Setter for firstname
     public String getFirstname() {
         return firstname;
     }
@@ -37,7 +50,6 @@ public class User {
         this.firstname = firstname;
     }
 
-    // Getter and Setter for lastname
     public String getLastname() {
         return lastname;
     }
@@ -46,7 +58,6 @@ public class User {
         this.lastname = lastname;
     }
 
-    // Getter and Setter for email
     public String getEmail() {
         return email;
     }
@@ -55,7 +66,6 @@ public class User {
         this.email = email;
     }
 
-    // Getter and Setter for password
     public String getPassword() {
         return password;
     }
@@ -64,12 +74,43 @@ public class User {
         this.password = password;
     }
 
-    // Getter and Setter for userRole
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public UserRole getUserRole() {
         return userRole;
     }
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
