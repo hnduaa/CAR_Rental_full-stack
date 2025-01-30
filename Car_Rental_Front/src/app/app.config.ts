@@ -10,5 +10,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideClientHydration(),
     provideRouter(routes),
+    provideHttpClient(),
   ],
 };

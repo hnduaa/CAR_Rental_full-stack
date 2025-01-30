@@ -7,10 +7,12 @@ import { HomeComponent } from './components/home-page/home-page.component';
 import { PostCarComponent } from './modules/admin/components/post-car/post-car.component';
 import { ManageCarsComponent } from './modules/admin/components/manage-cars/manage-cars.component';
 import { AdminLayoutComponent } from './modules/admin/components/admin-layout/admin-layout.component';
+import { SignupComponent } from './auth/components/signup/signup.component';
 
 export const routes: Routes = [
   //public routes 
   { path: 'login', component: LoginComponent},
+  { path: 'register', component: SignupComponent},
   { path: 'Home',component:HomeComponent},
   { path: '',redirectTo: 'Home',pathMatch: 'full'},
 
