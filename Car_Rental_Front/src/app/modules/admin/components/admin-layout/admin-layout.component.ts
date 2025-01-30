@@ -2,15 +2,14 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
-
 @Component({
-  selector: 'app-admin-dashboard',
+  selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  imports: [CommonModule, RouterModule,SidebarComponent],
+    templateUrl: './admin-layout.component.html',
+  styleUrl: './admin-layout.component.scss'
 })
-export class AdminDashboardComponent {
+export class AdminLayoutComponent {
   isSidebarCollapsed = false;
 
   updateSidebarState(collapsed: boolean) {

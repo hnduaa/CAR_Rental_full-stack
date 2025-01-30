@@ -2,6 +2,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { NzLayoutModule } from 'ng-zorro-antd/layout'; // Import NZ-ZORRO layout module
+import { NzButtonModule } from 'ng-zorro-antd/button'; // Import NZ-ZORRO button module
 
 interface Car {
   id: number;
@@ -16,7 +19,7 @@ interface Car {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterModule, NzLayoutModule, NzButtonModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
