@@ -43,11 +43,16 @@ public class AuthController {
         }
     }
 
+    // AuthController.java
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
             Authentication authentication = authService.authenticateUser(loginRequest);
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+            // Debug logs
+            System.out.println("User logged in: " + userDetails.getUsername());
+            System.out.println("User role: " + userDetails.getAuthorities().stream().findFirst().get().getAuthority());
 
             // Store user info in session
             session.setAttribute("USER_ID", userDetails.getUsername());
@@ -55,6 +60,7 @@ public class AuthController {
             // Create response object
             Map<String, Object> response = new HashMap<>();
             response.put("email", userDetails.getUsername());
+            response.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
             response.put("message", "Login successful");
 
             return ResponseEntity.ok(response);
@@ -63,5 +69,6 @@ public class AuthController {
                     .body(Map.of("message", "Invalid email or password"));
         }
     }
+
 
 }

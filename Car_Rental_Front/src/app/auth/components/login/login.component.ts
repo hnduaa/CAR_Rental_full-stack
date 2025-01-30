@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -7,11 +7,15 @@ import { AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   loginError = false;
@@ -19,39 +23,65 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService // Inject AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
-  // Toggle password visibility
+  ngOnInit(): void {
+    // Clear any existing auth data on component init
+    this.authService.logout();
+  }
+
+  // Convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  // Form submission handler
   onSubmit() {
-    this.submitted = true; // Set form as submitted for validation purposes
+    this.submitted = true;
+    this.loginError = false; // Reset error state
+
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: () => {
-          // Navigate to dashboard upon successful login
-          this.router.navigate(['/dashboard']); // Update the route if needed
+      const { email, password } = this.loginForm.value;
+      
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          const role = response.role.toUpperCase();
+          
+          // Navigate based on user role
+          if (role === 'ADMIN') {
+            this.router.navigate(['/admin/dashboard']);
+          } else if (role === 'CUSTOMER') {
+            this.router.navigate(['/customer/dashboard']);
+          } else {
+            console.error('Unknown role:', role);
+            this.loginError = true;
+          }
         },
-        error: (err) => {
-          console.error('Login failed:', err);
-          this.loginError = true; // Set error flag to show error message
-        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          this.loginError = true;
+          // Optional: Reset form on error
+          // this.loginForm.reset();
+          this.submitted = false;
+        }
       });
     }
   }
 
-  // Getter methods for template access
-  get f() {
-    return this.loginForm.controls;
+  // Optional: Reset form state when user starts typing again
+  onInputChange() {
+    if (this.submitted) {
+      this.loginError = false;
+    }
   }
 }
