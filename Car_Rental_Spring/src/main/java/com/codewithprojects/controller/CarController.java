@@ -7,6 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,15 +19,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cars")
+@CrossOrigin("*") // Allow frontend (Angular) to access this API
 public class CarController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarController.class);
 
     @Autowired
     private CarService carService;
 
-    // Endpoint to post a car for rent with an image
+    // Post a new car
     @PostMapping("/post")
     public ResponseEntity<Car> postCar(
             @RequestParam("brandName") String brandName,
@@ -37,10 +46,8 @@ public class CarController {
             @RequestParam("carImage") MultipartFile carImage) {
 
         try {
-            // Save the image file
             String imagePath = saveImage(carImage);
 
-            // Create car object and set its properties
             Car car = new Car();
             car.setBrandName(brandName);
             car.setCarName(carName);
@@ -51,21 +58,102 @@ public class CarController {
             car.setPricePerDay(pricePerDay);
             car.setDescription(description);
             car.setPostedDate(LocalDateTime.parse(postedAt));
-            car.setImagePath(imagePath);  // Set image path
+            car.setImagePath(imagePath);
 
-            // Save car to the database
             Car savedCar = carService.postCar(car);
             return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
         } catch (Exception e) {
+            logger.error("Error while posting car: ", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Helper method to save the image to a folder
+    // Get all cars
+    @GetMapping("/all")
+    public ResponseEntity<List<Car>> getAllCars() {
+        List<Car> cars = (List<Car>) carService.getAllCars();
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
+
+    // Get a car by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+        Car car = carService.getCarById(id);
+        if (car != null) {
+            // Normalize the image path to ensure no double slashes
+            String normalizedPath = car.getImagePath().replace("\\", "/");
+            car.setImagePath(normalizedPath);
+
+            return new ResponseEntity<>(car, HttpStatus.OK);
+        } else {
+            logger.warn("Car with ID {} not found", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Endpoint to get the car image by name
+    @GetMapping("/image/{imageName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName) throws IOException {
+        // Get the path to the image in the uploads folder
+        Path imagePath = Paths.get("uploads").resolve(imageName);
+        logger.info("Requesting image from path: " + imagePath.toString());
+
+        if (Files.exists(imagePath)) {
+            Resource resource = new UrlResource(imagePath.toUri());
+
+            // Set the content type based on the image file type
+            String contentType = Files.probeContentType(imagePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+        } else {
+            logger.error("Image not found at path: " + imagePath.toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    // Update a car
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car carDetails) {
+        Car existingCar = carService.getCarById(id);
+        if (existingCar != null) {
+            carDetails.setId(id);
+            Car updatedCar = carService.updateCar(id, carDetails);
+            return new ResponseEntity<>(updatedCar, HttpStatus.OK);
+        } else {
+            logger.warn("Car with ID {} not found for update", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    // Delete a car
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
+        Car existingCar = carService.getCarById(id);
+        if (existingCar != null) {
+            carService.deleteCar(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            logger.warn("Car with ID {} not found for deletion", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Save image method
     private String saveImage(MultipartFile image) throws IOException {
-        // Define the path where images will be saved
-        Path imagePath = Paths.get("uploads/" + image.getOriginalFilename());
+        Path uploadDir = Paths.get("uploads");
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir); // Create the uploads folder if it doesn't exist
+        }
+
+        // Save the image with its original filename
+        Path imagePath = uploadDir.resolve(image.getOriginalFilename());
         Files.copy(image.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-        return imagePath.toString();  // Save the file path to store in database
+
+        // Normalize the path to use forward slashes for consistency
+        String normalizedPath = imagePath.toString().replace("\\", "/");
+
+        return image.getOriginalFilename();  // Only return the image filename
     }
 }

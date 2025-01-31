@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Modifier la voiture</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="carForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nom de la voiture</mat-label>
+      <input matInput formControlName="carName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Marque</mat-label>
+      <input matInput formControlName="brandName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prix par jour</mat-label>
+      <input matInput type="number" formControlName="pricePerDay" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Année du modèle</mat-label>
+      <input matInput type="number" formControlName="modelYear" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Annuler</button>
+  <button mat-flat-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>

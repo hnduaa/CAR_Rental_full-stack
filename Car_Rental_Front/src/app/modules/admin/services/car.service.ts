@@ -17,8 +17,9 @@ export class CarService {
   
     // Method to get all cars// Method to get all cars (Update the correct endpoint)
     getAllCars(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/getAllCars`, { withCredentials: true });
+        return this.http.get<any[]>(`${this.apiUrl}/all`, { withCredentials: true });
     }
+    
   
   
     // Method to get a single car by ID

@@ -44,12 +44,7 @@ export class PostCarComponent {
           formData.append(key, value.toString()); // Convert all values to string before appending
         }
       });
-      
-      
-      
-      
-      
-  
+
       // Append the image file
       formData.append('carImage', this.carImage);
   
@@ -70,7 +65,7 @@ export class PostCarComponent {
   // Handle file input change
   onFileChange(event: any) {
     const file = event.target.files[0];  
-    if (file && file.type.startsWith('image/')) { // Ensure only images are selected
+    if (file && file.type.startsWith('image')) { // Ensure only images are selected
       this.carImage = file;  
       console.log('Selected Image:', file.name, file.type);
     } else {
