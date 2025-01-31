@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component'; // Assure-toi que le chemin est correct
+import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component'; // Ensure correct path
 
 @Component({
   selector: 'manage-cars',
@@ -40,7 +40,7 @@ export class ManageCarsComponent implements OnInit {
   getAllCars() {
     this.http.get<any[]>(`${this.apiUrl}/all`, { withCredentials: true }).subscribe(
       (response) => {
-        console.log('Response from API:', response); // Log the response
+        console.log('Response from API:', response);
         this.cars = response;
       },
       (error) => {
@@ -50,15 +50,21 @@ export class ManageCarsComponent implements OnInit {
   }
 
   editCar(car: any) {
-    console.log('Car object being passed to dialog:', car); // Log the car object being passed
+    console.log('Car object being passed to dialog:', car);
     const dialogRef = this.dialog.open(EditCarDialogComponent, {
       width: '450px',
       data: car
     });
   
     dialogRef.afterClosed().subscribe((updatedCar) => {
-      console.log('Updated car data after dialog close:', updatedCar); // Log updated car data
+      console.log('Updated car data after dialog close:', updatedCar);
       if (updatedCar) {
+        // Ensure unchanged fields are retained if not updated
+        updatedCar.carType = updatedCar.carType || car.carType;
+        updatedCar.transmission = updatedCar.transmission || car.transmission;
+        updatedCar.carColor = updatedCar.carColor || car.carColor;
+        updatedCar.description = updatedCar.description || car.description;
+  
         if (updatedCar.id) {
           this.http.put(`${this.apiUrl}/update/${updatedCar.id}`, updatedCar)
             .subscribe(() => this.getAllCars());
@@ -68,7 +74,6 @@ export class ManageCarsComponent implements OnInit {
       }
     });
   }
-  
   
 
   deleteCar(id: number) {

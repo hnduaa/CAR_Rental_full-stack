@@ -20,6 +20,11 @@
     transform: scale(1.05);
   }
   
+  .car-image-container {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
   .car-image {
     width: 100%;
     height: 150px;
@@ -27,9 +32,38 @@
     border-radius: 10px;
   }
   
-  .brand {
+  .car-details {
+    margin-top: 10px;
+  }
+  
+  .price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .price h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2d87f0;
+    margin: 0;
+  }
+  
+  .price span {
+    font-size: 14px;
+    color: #777;
+    margin-left: 5px;
+  }
+  
+  .car-name {
     font-size: 18px;
     font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .brand {
+    font-size: 16px;
     color: #555;
   }
   
@@ -38,26 +72,42 @@
     justify-content: space-around;
     margin: 10px 0;
     font-size: 14px;
+    color: #555;
+  }
+  
+  .car-info span {
+    display: flex;
+    align-items: center;
+  }
+  
+  .car-info mat-icon {
+    margin-right: 5px;
+  }
+  
+  .location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .location mat-icon {
+    margin-right: 5px;
   }
   
   .actions {
     display: flex;
     justify-content: space-around;
-  }
-  
-  .edit-form {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
     margin-top: 10px;
+  }
+  
+  button {
+    width: 120px;
+    font-size: 14px;
+  }
+  
+  button mat-icon {
+    margin-right: 5px;
   }
   
