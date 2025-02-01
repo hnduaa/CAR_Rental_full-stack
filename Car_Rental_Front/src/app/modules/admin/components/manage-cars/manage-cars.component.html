@@ -1,42 +1,49 @@
 <div class="cars-container">
     <mat-card *ngFor="let car of cars" class="car-card">
-      <div class="car-image-container">
-        <img [src]="'http://localhost:8080/api/cars/image/' + (car.imagePath || 'default-car.png')" alt="{{ car.carName }}" class="car-image" />
-      </div>
+      <div class="car-content">
+        <!-- Left side - Image -->
+        <div class="car-image-container">
+          <img [src]="'http://localhost:8080/api/cars/image/' + (car.imagePath || 'default-car.png')" 
+               alt="{{ car.carName }}" 
+               class="car-image" />
+        </div>
   
-      <div class="car-details">
-        <div class="price">
-          <h2>{{ car.pricePerDay }}<span>DH / day</span></h2>
-        </div>
-      
-        <h3 class="car-name">{{ car.carName }}</h3>
-        <p class="brand">{{ car.brandName }}</p>
-      
-        <div class="car-info">
-          <span><mat-icon>directions_car</mat-icon> {{ car.modelYear }}</span>
-          <span><mat-icon>category</mat-icon> {{ car.carType }}</span>
-        </div>
-      
-        <div class="description">
-          <mat-icon>description</mat-icon>
-          <span>{{ car.description || 'No description available' }}</span>
-        </div>
-      
-        <div class="location">
-          <mat-icon>location_on</mat-icon>
-          <span> Downtown Rental </span>
-        </div>
-      
-        <div class="actions">
-          <button mat-flat-button color="primary" (click)="editCar(car)">
-            <mat-icon>edit</mat-icon> Edit
-          </button>
-          <button mat-flat-button color="warn" (click)="deleteCar(car.id)">
-            <mat-icon>delete</mat-icon> Delete
-          </button>
+        <!-- Right side - Details -->
+        <div class="car-details">
+          <!-- Header with price and name -->
+          <div class="car-header">
+            <div class="title-section">
+              <h3 class="car-name">{{ car.carName }}</h3>
+              <p class="brand">{{ car.brandName }}</p>
+            </div>
+            <div class="price">
+              <h2>{{ car.pricePerDay }}<span>DH / day</span></h2>
+            </div>
+          </div>
+  
+          <!-- Car specifications -->
+          <div class="car-info">
+            <span><mat-icon>directions_car</mat-icon> {{ car.modelYear }}</span>
+            <span><mat-icon>category</mat-icon> {{ car.carType }}</span>
+            <span><mat-icon>location_on</mat-icon> Downtown Rental</span>
+          </div>
+  
+          <!-- Description -->
+          <div class="description">
+            <mat-icon>description</mat-icon>
+            <span>{{ car.description || 'No description available' }}</span>
+          </div>
+  
+          <!-- Action buttons -->
+          <div class="actions">
+            <button mat-flat-button color="primary" (click)="editCar(car)">
+              <mat-icon>edit</mat-icon> Edit
+            </button>
+            <button mat-flat-button color="warn" (click)="deleteCar(car.id)">
+              <mat-icon>delete</mat-icon> Delete
+            </button>
+          </div>
         </div>
       </div>
-      
     </mat-card>
   </div>
-  
