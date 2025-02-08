@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,14 +45,18 @@ public class AuthServiceImpl implements AuthService {
         // Save user to the database
         User createdUser = userRepository.save(user);
 
-        // Map to UserDto
-        UserDto userDto = new UserDto();
-        userDto.setId(createdUser.getId());
-        userDto.setFirstname(createdUser.getFirstname());
-        userDto.setLastname(createdUser.getLastname());
-        userDto.setEmail(createdUser.getEmail());
-
-        return userDto;
+        // ✅ Map to UserDto with all fields
+        return new UserDto(
+                createdUser.getId(),
+                createdUser.getFirstname(),
+                createdUser.getLastname(),
+                createdUser.getEmail(),
+                createdUser.getPhoneNumber(),
+                createdUser.getAge(),
+                createdUser.getGender(),
+                createdUser.getUserRole(),
+                createdUser.getCreatedAt()
+        );
     }
 
     @Override
@@ -68,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
                             loginRequest.getPassword()
                     )
             );
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             throw new RuntimeException("Invalid email or password");
         }
     }

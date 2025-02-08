@@ -1,0 +1,49 @@
+<div class="statistics">
+    <h1>Statistics & Analytics</h1>
+  
+    <!-- KPI Cards Section -->
+    <div class="stats-cards">
+      <div class="card">
+        <h3>Total Bookings</h3>
+        <p>{{ totalBookings }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Revenue</h3>
+        <p>${{ totalRevenue }}</p>
+      </div>
+      <div class="card">
+        <h3>Active Cars</h3>
+        <p>{{ activeCars }}</p>
+      </div>
+      <div class="card">
+        <h3>Cancelled Reservations</h3>
+        <p>{{ cancelledReservations }}</p>
+      </div>
+    </div>
+  
+    <!-- Business Charts Section -->
+    <div class="charts">
+      <div class="chart">
+        <h3>Revenue Trend</h3>
+        <canvas id="revenueChart"></canvas>
+      </div>
+      <div class="chart">
+        <h3>Bookings Trend</h3>
+        <canvas id="bookingsChart"></canvas>
+      </div>
+    </div>
+  
+    <!-- User Analytics Section -->
+    <h2>User Analytics</h2>
+    <div class="user-charts">
+      <div class="chart">
+        <h3>Gender Distribution</h3>
+        <canvas id="genderChart"></canvas>
+      </div>
+      <div class="chart">
+        <h3>Age Distribution</h3>
+        <canvas id="ageChart"></canvas>
+      </div>
+    </div>
+  </div>
+  

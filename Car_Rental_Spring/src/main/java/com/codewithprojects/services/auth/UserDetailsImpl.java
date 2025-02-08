@@ -35,7 +35,7 @@ public class UserDetailsImpl implements UserDetails {
         return user.getEmail();
     }
 
-    public String getPhoneNumber() {  // ✅ Added phone number getter
+    public String getPhoneNumber() {
         return user.getPhoneNumber();
     }
 
