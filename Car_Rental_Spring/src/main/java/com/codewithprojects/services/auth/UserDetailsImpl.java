@@ -35,6 +35,10 @@ public class UserDetailsImpl implements UserDetails {
         return user.getEmail();
     }
 
+    public Long getId() {
+        return user.getId();  // Return the user ID from the User entity
+    }
+
     public String getPhoneNumber() {
         return user.getPhoneNumber();
     }
@@ -59,3 +63,4 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 }
+

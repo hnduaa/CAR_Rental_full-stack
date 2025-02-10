@@ -1,105 +1,46 @@
-// home.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NzLayoutModule } from 'ng-zorro-antd/layout'; // Import NZ-ZORRO layout module
-import { NzButtonModule } from 'ng-zorro-antd/button'; // Import NZ-ZORRO button module
-
-interface Car {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-  features: string[];
-  available: boolean;
-}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule, NzLayoutModule, NzButtonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
 export class HomeComponent {
+  // Example variables (if needed in the future)
   selectedLocation = '';
   pickupDate = '';
   returnDate = '';
 
-  locations = [
-    'New York',
-    'Los Angeles',
-    'Chicago',
-    'Miami',
-    'Las Vegas'
-  ];
+  locations = ['New York', 'Los Angeles', 'Chicago', 'Miami', 'Las Vegas'];
 
-  cars: Car[] = [
-    {
-      id: 1,
-      name: 'Tesla Model 3',
-      price: 89,
-      image: '/assets/images/tesla-model-3.jpg',
-      category: 'Electric',
-      features: ['Autopilot', '350mi Range', 'Supercharging'],
-      available: true
-    },
-    {
-      id: 2,
-      name: 'BMW X5',
-      price: 120,
-      image: '/assets/images/bmw-x5.jpg',
-      category: 'SUV',
-      features: ['AWD', 'Leather Seats', 'Panoramic Roof'],
-      available: true
-    },
-    {
-      id: 3,
-      name: 'Mercedes C-Class',
-      price: 95,
-      image: '/assets/images/mercedes-c.jpg',
-      category: 'Sedan',
-      features: ['Premium Audio', 'GPS Navigation', 'Heated Seats'],
-      available: false
-    }
-  ];
-
+  // Benefits data with modern Font Awesome icons
   benefits = [
     {
-      icon: '🚗',
+      icon: 'fas fa-car-side',
       title: 'Wide Selection',
       description: 'Choose from our diverse fleet of vehicles'
     },
     {
-      icon: '💰',
+      icon: 'fas fa-tags',
       title: 'Best Prices',
       description: 'Competitive rates and special offers'
     },
     {
-      icon: '🔧',
+      icon: 'fas fa-headset',
       title: '24/7 Support',
       description: 'Round-the-clock customer assistance'
     },
     {
-      icon: '⭐',
+      icon: 'fas fa-check-circle',
       title: 'Easy Booking',
       description: 'Simple and fast reservation process'
     }
   ];
-
-  searchCars() {
-    console.log('Searching cars with:', {
-      location: this.selectedLocation,
-      pickup: this.pickupDate,
-      return: this.returnDate
-    });
-  }
-
-  bookCar(car: Car) {
-    console.log('Booking car:', car);
-  }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

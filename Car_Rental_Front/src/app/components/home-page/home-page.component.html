@@ -1,99 +1,64 @@
+<!-- Navbar -->
 <div class="navbar">
-    <div class="navbar-title">
-      <a routerLink="/login">Car Rental Service</a>
-    </div>
-    <div class="nav-links">
-      <a class="link-button" routerLink="/register" routerLinkActive="active" >Sign Up</a>
-      <a class="link-button" routerLink="/login" routerLinkActive="active">Login</a>
-    </div>
+  <div class="navbar-title">
+    <a routerLink="/login">Car Rental Service</a>
   </div>
+  <div class="nav-links">
+    <a class="link-button" routerLink="/register" routerLinkActive="active">Sign Up</a>
+    <a class="link-button" routerLink="/login" routerLinkActive="active">Login</a>
+  </div>
+</div>
+
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Find Your Perfect Car</h1>
-      <p class="hero-subtitle">Experience luxury and comfort with our premium fleet</p>
-      
-      <!-- Search Form -->
-      <div class="search-form">
-        <div class="search-grid">
-          <div class="form-group">
-            <label>Location</label>
-            <select [(ngModel)]="selectedLocation">
-              <option value="">Select Location</option>
-              <option *ngFor="let location of locations" [value]="location">{{location}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Pick-up Date</label>
-            <input type="date" [(ngModel)]="pickupDate">
-          </div>
-          <div class="form-group">
-            <label>Return Date</label>
-            <input type="date" [(ngModel)]="returnDate">
-          </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="fade-in">Welcome to Car Rental Service</h1>
+    <p class="hero-description fade-in" style="animation-delay: 0.5s;">
+      At Car Rental Service, we believe that every journey should be stress-free, luxurious, and memorable.
+      Our modern fleet is meticulously maintained to ensure that your travel experience is nothing short of exceptional.
+    </p>
+    <p class="hero-description fade-in" style="animation-delay: 1s;">
+      Thank you for choosing us as your trusted partner on the road. We are honored to be a part of your journey.
+    </p>
+  </div>
+</section>
+
+<!-- About Our Service Section -->
+<section class="about-section">
+  <div class="section-container fade-in" style="animation-delay: 0.5s;">
+    <h2 class="section-title">Our Story</h2>
+    <p class="about-text">
+      Founded with a passion for excellence, Car Rental Service was born out of a desire to offer more than just vehicles.
+      We strive to provide a complete experience—from comfort and style to reliability and outstanding customer service.
+    </p>
+    <p class="about-text">
+      Our commitment to quality and safety means that you can enjoy every mile, confident in the knowledge that we’re with you every step of the way.
+    </p>
+  </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section">
+  <div class="section-container fade-in" style="animation-delay: 0.7s;">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="benefits-grid">
+      <div *ngFor="let benefit of benefits" class="benefit-card fade-in" style="animation-delay: 0.9s;">
+        <div class="benefit-icon">
+          <i [class]="benefit.icon + ' icon'"></i>
         </div>
-        <button class="search-btn" (click)="searchCars()">
-          Search Available Cars
-        </button>
+        <h3>{{ benefit.title }}</h3>
+        <p>{{ benefit.description }}</p>
       </div>
     </div>
-  </section>
-  
-  <!-- Featured Cars -->
-  <section class="featured-section">
-    <div class="section-container">
-      <h2 class="section-title">Featured Vehicles</h2>
-      <div class="cars-grid">
-        <div *ngFor="let car of cars" class="car-card">
-          <img [src]="car.image" [alt]="car.name" class="car-image">
-          <div class="car-details">
-            <h3>{{car.name}}</h3>
-            <p class="car-category">{{car.category}}</p>
-            <ul class="feature-list">
-              <li *ngFor="let feature of car.features">
-                <span class="check-icon">✓</span> {{feature}}
-              </li>
-            </ul>
-            <div class="card-footer">
-              <span class="price">${{car.price}}/day</span>
-              <button 
-                [disabled]="!car.available"
-                (click)="bookCar(car)"
-                [class.disabled]="!car.available"
-                class="book-btn">
-                {{car.available ? 'Book Now' : 'Not Available'}}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="section-container">
-      <h2 class="section-title">Why Choose Us</h2>
-      <div class="benefits-grid">
-        <div *ngFor="let benefit of benefits" class="benefit-card">
-          <div class="benefit-icon">
-            <span>{{benefit.icon}}</span>
-          </div>
-          <h3>{{benefit.title}}</h3>
-          <p>{{benefit.description}}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Call to Action -->
-  <section class="cta-section">
-    <div class="section-container">
-      <h2>Ready to Hit the Road?</h2>
-      <p>Experience the freedom of premium car rental services</p>
-      <button (click)="scrollToTop()" class="cta-btn">
-        Book Your Car Now
-      </button>
-    </div>
-  </section>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+  <div class="section-container fade-in" style="animation-delay: 1s;">
+    <h2>Ready to Begin Your Journey?</h2>
+    <p>Join us and experience a premium car rental service that puts you first.</p>
+    <button (click)="scrollToTop()" class="cta-btn">Get Started</button>
+  </div>
+</section>

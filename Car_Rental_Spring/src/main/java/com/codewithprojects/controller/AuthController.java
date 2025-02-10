@@ -50,18 +50,26 @@ public class AuthController {
             Authentication authentication = authService.authenticateUser(loginRequest);
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            // Debug logs
+            // Fetch the user ID using the new getId() method
+            Long userId = userDetails.getId();
+
+            // Log user details for debugging
             System.out.println("User logged in: " + userDetails.getUsername());
             System.out.println("User role: " + userDetails.getAuthorities().stream().findFirst().get().getAuthority());
+            System.out.println("User ID: " + userId);  // Log the user ID for debugging
+
+            // Create response map including user ID
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", userId);  // Include user ID
+            response.put("email", userDetails.getUsername());
+            response.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
+            response.put("message", "Login successful");
 
             // Store user info in session
             session.setAttribute("USER_ID", userDetails.getUsername());
 
-            // Create response object
-            Map<String, Object> response = new HashMap<>();
-            response.put("email", userDetails.getUsername());
-            response.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
-            response.put("message", "Login successful");
+            // Print the response being sent to frontend
+            System.out.println("Response to be sent to frontend: " + response);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -69,6 +77,9 @@ public class AuthController {
                     .body(Map.of("message", "Invalid email or password"));
         }
     }
+
+
+
 
 
 }

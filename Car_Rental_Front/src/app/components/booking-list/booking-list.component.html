@@ -1,0 +1,39 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Car</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Days</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th *ngIf="isAdmin">Action</th> <!-- Only Admin Sees This -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.carId }}</td>
+        <td>{{ booking.fromDate | date }}</td>
+        <td>{{ booking.toDate | date }}</td>
+        <td>{{ booking.days }}</td>
+        <td>{{ booking.totalPrice | currency }}</td>
+        <td>
+          <span [ngClass]="{
+            'status-pending': booking.status === 'Pending',
+            'status-accepted': booking.status === 'Accepted',
+            'status-refused': booking.status === 'Refused'
+          }">
+            {{ booking.status }}
+          </span>
+        </td>
+        <td *ngIf="isAdmin">
+          <!-- Accept Icon -->
+          <i class="fas fa-check-circle text-success" (click)="updateStatus(booking.id, 'Accepted')" style="cursor: pointer;"></i>
+          &nbsp;
+          <!-- Refuse Icon -->
+          <i class="fas fa-times-circle text-danger" (click)="updateStatus(booking.id, 'Refused')" style="cursor: pointer;"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

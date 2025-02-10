@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "cars")
-
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,20 @@ public class Car {
     @CreationTimestamp
     @Column(name = "posted_date")
     private LocalDateTime postedDate;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Rating> ratings;
+
+    // This method calculates the average rating of a car based on the ratings in the list
+    public double getAverageRating() {
+        if (ratings == null || ratings.isEmpty()) {
+            return 0;
+        }
+        return ratings.stream()
+                .mapToInt(Rating::getRating)
+                .average()
+                .orElse(0);
+    }
 
     // Constructor
     public Car() {}
@@ -117,5 +131,13 @@ public class Car {
 
     public void setPostedDate(LocalDateTime postedDate) {
         this.postedDate = postedDate;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

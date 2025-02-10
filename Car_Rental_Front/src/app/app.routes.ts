@@ -10,6 +10,7 @@ import { SignupComponent } from './auth/components/signup/signup.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { StatisticsComponent } from './modules/admin/components/statistics/statistics.component';
+import { MybookingComponent } from './modules/customer/components/mybooking/mybooking.component';
 
 export const routes: Routes = [
   //public routes 
@@ -35,7 +36,7 @@ export const routes: Routes = [
 children: [
   { path: 'dashboard',component: CustomerDashboardComponent,canActivate: [AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate: [AuthGuard] },
-
+  {path:'my-bookings',component:MybookingComponent,canActivate: [AuthGuard] },
 
 ]
 

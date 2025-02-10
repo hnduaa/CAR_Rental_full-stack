@@ -1,0 +1,32 @@
+<div class="booking-form">
+    <h2>Book a Car</h2>
+  
+    <form (ngSubmit)="submitBooking()">
+      <div>
+        <label for="car">Select Car</label>
+        <select id="car" [(ngModel)]="booking.carId" name="carId" required>
+          <option *ngFor="let car of cars" [value]="car.id">{{ car.carName }} ({{ car.brandName }})</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="fromDate">From Date</label>
+        <input type="date" id="fromDate" [(ngModel)]="booking.fromDate" name="fromDate" required (change)="calculateBookingDetails()">
+      </div>
+  
+      <div>
+        <label for="toDate">To Date</label>
+        <input type="date" id="toDate" [(ngModel)]="booking.toDate" name="toDate" required (change)="calculateBookingDetails()">
+      </div>
+  
+      <div>
+        <p><strong>Days: </strong>{{ booking.days }}</p>
+        <p><strong>Total Price: </strong>{{ booking.totalPrice | currency }}</p>
+      </div>
+  
+      <button type="submit" [disabled]="!booking.fromDate || !booking.toDate || !booking.carId">
+        Submit Booking
+      </button>
+    </form>
+  </div>
+  

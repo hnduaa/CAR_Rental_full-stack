@@ -37,7 +37,10 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findFirstByEmail(email).orElse(null);
     }
-
+    // ✅ **New method to find user by ID**
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
     // Method to delete user
     public void deleteUser(User user) {
         userRepository.delete(user);  // Delete the user from the database

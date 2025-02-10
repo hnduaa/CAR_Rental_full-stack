@@ -1,7 +1,9 @@
 package com.codewithprojects.controller;
 
 import com.codewithprojects.entity.Car;
+import com.codewithprojects.dto.CarWithRatingDTO;
 import com.codewithprojects.services.car.CarService;
+import com.codewithprojects.services.RatingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,9 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private RatingService ratingService;  // Inject RatingService
 
     // Post a new car
     @PostMapping("/post")
@@ -83,7 +88,6 @@ public class CarController {
             // Normalize the image path to ensure no double slashes
             String normalizedPath = car.getImagePath().replace("\\", "/");
             car.setImagePath(normalizedPath);
-
             return new ResponseEntity<>(car, HttpStatus.OK);
         } else {
             logger.warn("Car with ID {} not found", id);
@@ -100,7 +104,6 @@ public class CarController {
 
         if (Files.exists(imagePath)) {
             Resource resource = new UrlResource(imagePath.toUri());
-
             // Set the content type based on the image file type
             String contentType = Files.probeContentType(imagePath);
             return ResponseEntity.ok()
@@ -126,7 +129,6 @@ public class CarController {
         }
     }
 
-
     // Delete a car
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
@@ -146,14 +148,26 @@ public class CarController {
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir); // Create the uploads folder if it doesn't exist
         }
-
         // Save the image with its original filename
         Path imagePath = uploadDir.resolve(image.getOriginalFilename());
         Files.copy(image.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-
         // Normalize the path to use forward slashes for consistency
         String normalizedPath = imagePath.toString().replace("\\", "/");
-
         return image.getOriginalFilename();  // Only return the image filename
+    }
+
+    // Get a car by ID including average rating using the DTO
+    @GetMapping("/{id}/details")
+    public ResponseEntity<?> getCarWithRating(@PathVariable Long id) {
+        Car car = carService.getCarById(id);
+        if (car != null) {
+            double averageRating = ratingService.getAverageRatingByCarId(id);
+            // Create and return a DTO instead of trying to set a non-existent averageRating field on Car
+            CarWithRatingDTO carWithRatingDTO = new CarWithRatingDTO(car, averageRating);
+            return new ResponseEntity<>(carWithRatingDTO, HttpStatus.OK);
+        } else {
+            logger.warn("Car with ID {} not found", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

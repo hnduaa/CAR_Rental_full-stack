@@ -1,1 +1,71 @@
-<p>customer-dashboard works!</p>
+<!-- <app-notifications role="customer"></app-notifications> -->
+
+<div class="car-carousel">
+    <div class="car-list">
+      <mat-card *ngFor="let car of cars()" class="car-card">
+        <div class="car-image-container">
+          <img [src]="'http://localhost:8080/api/cars/image/' + (car.imagePath || 'default-car.png')"
+               alt="{{ car.carName }}"
+               class="car-image"
+               (error)="handleImageError($event)" />
+        </div>
+  
+        <mat-card-content class="car-text">
+          <mat-card-title>{{ car.carName }}</mat-card-title>
+          <mat-card-subtitle>{{ car.brandName }} - {{ car.carType }}</mat-card-subtitle>
+          <p>{{ car.description }}</p>
+  
+          <div class="car-details">
+            <p><strong>Transmission:</strong> {{ car.transmission }}</p>
+            <p><strong>Price per day:</strong> ${{ car.pricePerDay }}</p>
+            <p><strong>Model Year:</strong> {{ car.modelYear }}</p>
+          </div>
+  
+          <!-- Rating Section -->
+          <div class="rating-container">
+            <div *ngFor="let star of [1,2,3,4,5]" class="star"
+                 (mouseover)="hoverRatings[car.id] = star"
+                 (mouseout)="hoverRatings[car.id] = null"
+                 (click)="onStarClick(car.id, star)">
+              <i [ngClass]="(star <= getEffectiveRating(car.id)) ? 'fas fa-star' : 'far fa-star'"></i>
+            </div>
+          </div>
+        </mat-card-content>
+     <!-- End Star Rating Section -->
+    <mat-card-actions>
+      <button mat-button (click)="openBooking(car)">Book Now</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</div>
+
+<!-- Booking Form Pop-Up -->
+<div class="booking-form" *ngIf="showBooking()">
+<div class="booking-form-content">
+  <h2>Book a Car</h2>
+  <form (ngSubmit)="submitBooking()" #bookingForm="ngForm">
+    <div>
+      <label for="car">Select Car</label>
+      <select id="car" [(ngModel)]="booking.carId" name="carId" required>
+        <option *ngFor="let car of cars()" [value]="car.id">{{ car.carName }} ({{ car.brandName }})</option>
+      </select>
+    </div>
+    <div>
+      <label for="fromDate">From Date</label>
+      <input type="date" id="fromDate" [(ngModel)]="booking.fromDate" name="fromDate" required (change)="calculateBookingDetails()">
+    </div>
+    <div>
+      <label for="toDate">To Date</label>
+      <input type="date" id="toDate" [(ngModel)]="booking.toDate" name="toDate" required (change)="calculateBookingDetails()">
+    </div>
+    <div class="booking-details">
+      <p><strong>Days: </strong>{{ booking.days }}</p>
+      <p><strong>Total Price: </strong>{{ booking.totalPrice | currency }}</p>
+    </div>
+    <div class="booking-buttons">
+      <button type="submit" [disabled]="!booking.fromDate || !booking.toDate || !booking.carId">Submit Booking</button>
+      <button type="button" (click)="closeBooking()">Cancel</button>
+    </div>
+  </form>
+</div>
+</div>
