@@ -6,7 +6,6 @@ import { BookingListComponent } from '../../../../components/booking-list/bookin
   standalone: true,
   imports: [BookingListComponent],
   templateUrl: './mybooking.component.html',
-  styleUrl: './mybooking.component.scss'
 })
 export class MybookingComponent {
 

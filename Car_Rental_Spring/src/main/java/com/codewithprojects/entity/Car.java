@@ -140,4 +140,8 @@ public class Car {
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
+
+    public String getName() {
+        return brandName +carName ;
+    }
 }

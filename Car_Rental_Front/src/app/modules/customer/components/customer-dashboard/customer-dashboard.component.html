@@ -1,4 +1,4 @@
-<!-- <app-notifications role="customer"></app-notifications> -->
+<app-notifications role="customer"></app-notifications>
 
 <div class="car-carousel">
     <div class="car-list">
@@ -60,7 +60,7 @@
     </div>
     <div class="booking-details">
       <p><strong>Days: </strong>{{ booking.days }}</p>
-      <p><strong>Total Price: </strong>{{ booking.totalPrice | currency }}</p>
+      <p><strong>Total Price: </strong>{{ booking.totalPrice}} MAD</p>
     </div>
     <div class="booking-buttons">
       <button type="submit" [disabled]="!booking.fromDate || !booking.toDate || !booking.carId">Submit Booking</button>

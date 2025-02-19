@@ -1,39 +1,52 @@
 <table class="table">
-    <thead>
-      <tr>
-        <th>Car</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Days</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th *ngIf="isAdmin">Action</th> <!-- Only Admin Sees This -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let booking of bookings">
-        <td>{{ booking.carId }}</td>
-        <td>{{ booking.fromDate | date }}</td>
-        <td>{{ booking.toDate | date }}</td>
-        <td>{{ booking.days }}</td>
-        <td>{{ booking.totalPrice | currency }}</td>
-        <td>
-          <span [ngClass]="{
-            'status-pending': booking.status === 'Pending',
-            'status-accepted': booking.status === 'Accepted',
-            'status-refused': booking.status === 'Refused'
-          }">
-            {{ booking.status }}
-          </span>
-        </td>
-        <td *ngIf="isAdmin">
-          <!-- Accept Icon -->
-          <i class="fas fa-check-circle text-success" (click)="updateStatus(booking.id, 'Accepted')" style="cursor: pointer;"></i>
-          &nbsp;
-          <!-- Refuse Icon -->
-          <i class="fas fa-times-circle text-danger" (click)="updateStatus(booking.id, 'Refused')" style="cursor: pointer;"></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <thead>
+    <tr>
+      <th>Car</th>
+      <!-- Afficher les informations de l'utilisateur uniquement pour les admins -->
+      <th *ngIf="isAdmin">User</th>
+      <th *ngIf="isAdmin">Telephone</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Days</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Action</th> <!-- Action visible uniquement pour l'admin ou l'utilisateur connecté -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let booking of bookings">
+      <!-- Afficher le nom de la voiture -->
+      <td>{{ getCarName(booking.carId) }}</td>
+      <!-- Afficher les détails de l'utilisateur uniquement si admin -->
+      <td *ngIf="isAdmin">{{ getUserName(booking.userId) }}</td>
+      <td *ngIf="isAdmin">{{ getUserPhone(booking.userId) }}</td>
+      <td>{{ booking.fromDate  }}</td>
+      <td>{{ booking.toDate}}</td>
+      <td>{{ booking.days }}</td>
+      <td>{{ booking.totalPrice }} MAD</td>
+      <td>
+        <span [ngClass]="{
+          'status-pending': booking.status === 'Pending',
+          'status-accepted': booking.status === 'Accepted',
+          'status-refused': booking.status === 'Refused'
+        }">
+          {{ booking.status }}
+        </span>
+      </td>
+      <td *ngIf="isAdmin">
+        <!-- Icône accepter -->
+        <i class="fas fa-check-circle text-success" (click)="updateStatus(booking.id, 'Accepted')" style="cursor: pointer;"></i>
+        &nbsp;
+        <!-- Icône refuser -->
+        <i class="fas fa-times-circle text-danger" (click)="updateStatus(booking.id, 'Refused')" style="cursor: pointer;"></i>
+      </td>
+      <td *ngIf="!isAdmin">
+        <!-- Icône Modifier -->
+        <i class="fas fa-edit text-warning" (click)="openEditDialog(booking)" style="cursor: pointer;"></i>
+        &nbsp;
+        <!-- Icône Supprimer -->
+        <i *ngIf="booking.id" class="fas fa-trash text-danger" (click)="deleteBooking(booking.id)" style="cursor: pointer;"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>

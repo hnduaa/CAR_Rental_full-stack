@@ -13,7 +13,8 @@ import { AuthService } from '../../../../auth/services/auth/auth.service';
 import { BookingService } from '../../../../services/booking.service';
 import { Booking } from '../../../../models/booking.model';
 import { FormsModule } from '@angular/forms';
-// import { NotificationsComponent } from '../../../../components/notifications.component';
+import { NotificationsComponent } from '../../../../components/notifications/notifications.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatMenuModule,
     FormsModule,
-    // NotificationsComponent
+    NotificationsComponent,
+    MatSnackBarModule
   ],
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.scss']
@@ -37,6 +39,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy, AfterViewI
   private carService = inject(CarService);
   private ratingService = inject(RatingService);
   private bookingService = inject(BookingService);
+  private snackBar = inject(MatSnackBar);
 
   isBrowser = isPlatformBrowser(this.platformId);
   cars = signal<Car[]>([]); // Holds all available cars
@@ -129,6 +132,8 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy, AfterViewI
       next: () => {
         console.log(`Rating submitted for car ${carId}: ${rating}`);
         this.hoverRatings[carId] = null; // Reset hover state.
+        // Afficher un message de confirmation
+        this.snackBar.open('Rating submitted', 'Close', { duration: 3000 });
       },
       error: (err) => console.error('Error submitting rating', err)
     });

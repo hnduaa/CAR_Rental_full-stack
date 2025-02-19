@@ -35,16 +35,15 @@ export class PostCarComponent {
   
     if (this.carImage) {
       const formData: FormData = new FormData();
-      
-      // Append car data fields correctly
+  
+      // Append car data fields
       Object.keys(this.carData).forEach((key) => {
-        let value = this.carData[key as keyof typeof this.carData] as string | number | null;
-      
+        const value = this.carData[key as keyof typeof this.carData];
         if (value !== null && value !== undefined) {
-          formData.append(key, value.toString()); // Convert all values to string before appending
+          formData.append(key, value.toString());
         }
       });
-
+  
       // Append the image file
       formData.append('carImage', this.carImage);
   
@@ -52,13 +51,16 @@ export class PostCarComponent {
       this.carService.postCarWithImage(formData).subscribe(
         (response) => {
           console.log('Car posted successfully:', response);
+          alert('Car has been successfully added!');  // Pop-up alert
         },
         (error) => {
           console.error('Error posting car:', error);
+          alert('Error posting car. Please try again.');
         }
       );
     } else {
       console.error('No image selected');
+      alert('Please select an image before submitting.');
     }
   }
   

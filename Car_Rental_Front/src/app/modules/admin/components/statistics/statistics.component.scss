@@ -1,70 +1,196 @@
-.statistics {
-    padding: 20px;
-  
-    h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #333;
-    }
-  
-    h2 {
-      margin-top: 40px;
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
-    }
-  
-    .stats-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 30px;
-  
-      .card {
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        flex: 1 1 200px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-  
-        h3 {
-          margin-bottom: 10px;
-          font-size: 18px;
-          color: #666;
-        }
-  
-        p {
-          font-size: 24px;
-          font-weight: bold;
-          color: #333;
-        }
-      }
-    }
-  
-    .charts, .user-charts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-  
-      .chart {
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        flex: 1 1 300px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  
-        h3 {
-          margin-bottom: 15px;
-          font-size: 18px;
-          color: #666;
-        }
-  
-        canvas {
-          width: 100% !important;
-          height: auto !important;
-        }
-      }
+// Variables de couleurs
+$primary-color: #1E90FF;        // Bleu moderne pour les éléments importants
+$secondary-color: #2C3E50;      // Gris foncé pour le texte et titres
+$accent-color: #18BC9C;         // Teal subtil pour quelques accents
+$error-color: #E74C3C;          // Rouge pour les messages d'erreur
+$background-color: #F7F8FA;     // Fond clair et neutre
+$card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+
+// Container général
+.statistics-container {
+  background-color: $background-color;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.statistics-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Titre du dashboard
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: $secondary-color;
+  text-align: center;
+}
+
+// Loading State
+.loading-state {
+  text-align: center;
+  padding: 2rem 0;
+
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid $primary-color;
+    border-radius: 50%;
+    border-top-color: transparent;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+  }
+
+  .loading-text {
+    margin-top: 1rem;
+    color: lighten($secondary-color, 30%);
+    font-size: 1rem;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Error State
+.error-state {
+  background-color: lighten($error-color, 40%);
+  border-left: 4px solid $error-color;
+  color: darken($error-color, 10%);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  text-align: center;
+
+  .error-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .error-message {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .retry-button {
+    margin-top: 1rem;
+    background-color: $error-color;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: darken($error-color, 10%);
     }
   }
-  
+}
+
+// KPI Cards
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.kpi-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: $card-shadow;
+  text-align: center;
+
+  .kpi-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $secondary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  .kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  .kpi-subtitle {
+    font-size: 0.875rem;
+    color: $secondary-color;
+    opacity: 0.8;
+  }
+}
+
+// Grille des graphiques
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chart-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: $card-shadow;
+
+  .chart-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $secondary-color;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/9;
+  }
+}
+
+/* Spécifique pour Gender Distribution : réduire la taille du graphique */
+#genderChart {
+  max-width: 300px !important;
+  margin: 0 auto;
+  aspect-ratio: 1/1; /* Optionnel : pour forcer un rendu carré */
+}
+
+// Ajustements responsives
+@media (max-width: 767px) {
+  .statistics-container {
+    padding: 1rem;
+  }
+
+  .kpi-card {
+    padding: 1.5rem;
+
+    .kpi-value {
+      font-size: 1.75rem;
+    }
+  }
+
+  .chart-card {
+    padding: 1rem;
+  }
+}

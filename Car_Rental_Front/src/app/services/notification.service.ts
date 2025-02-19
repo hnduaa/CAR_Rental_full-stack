@@ -1,82 +1,51 @@
-// notification.service.ts
-import { Injectable, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { AppNotification } from '../models/notification.model';
-import { AuthService } from '../auth/services/auth/auth.service';
-import { RxStompService } from '@stomp/ng2-stompjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private platformId = inject(PLATFORM_ID);
-  private authService = inject(AuthService);
-  private rxStompService = inject(RxStompService);
-
-  // Holds notifications to be displayed in your UI.
+  // BehaviorSubject to hold the current list of notifications
   private notificationsSubject = new BehaviorSubject<AppNotification[]>([]);
-  public notifications$ = this.notificationsSubject.asObservable();
+  // Expose notifications as an observable if needed elsewhere
+  notifications$ = this.notificationsSubject.asObservable();
 
-  constructor() {
-    // Ensure this logic runs only in the browser.
-    if (isPlatformBrowser(this.platformId)) {
-      const role = this.authService.getCurrentUserRole();
+  // Adjust the URL to match your backend API
+  private apiUrl = 'http://localhost:8080/api/notifications';
 
-      if (role === 'ADMIN') {
-        // Subscribe to notifications meant for admins (e.g. new bookings).
-        this.rxStompService.watch('/topic/admin-notifications').subscribe((message) => {
-          const notif: AppNotification = {
-            id: new Date().getTime().toString(),
-            message: message.body,
-            type: 'booking',
-            read: false,
-            timestamp: new Date()
-          };
-          this.addNotification(notif);
-        });
-      } else {
-        // For regular users, subscribe to status updates.
-        this.rxStompService.watch('/user/queue/notifications').subscribe((message) => {
-          const notif: AppNotification = {
-            id: new Date().getTime().toString(),
-            message: message.body,
-            type: 'status',
-            read: false,
-            timestamp: new Date()
-          };
-          this.addNotification(notif);
-        });
-      }
+  constructor(private http: HttpClient) { }
 
-      // Optionally, subscribe to system-wide notifications.
-      this.rxStompService.watch('/topic/system').subscribe((message) => {
-        const notif: AppNotification = {
-          id: new Date().getTime().toString(),
-          message: message.body,
-          type: 'system',
-          read: false,
-          timestamp: new Date()
-        };
-        this.addNotification(notif);
-      });
-    }
-  }
-
-  private addNotification(notification: AppNotification): void {
-    const current = this.notificationsSubject.value;
-    this.notificationsSubject.next([notification, ...current]);
-  }
-
-  // Marks a notification as read.
-  markAsRead(notificationId: string): void {
-    const updated = this.notificationsSubject.value.map((notif) =>
-      notif.id === notificationId ? { ...notif, read: true } : notif
+  /**
+   * Load notifications for a given user.
+   * The backend returns notifications for the given user ID.
+   */
+  loadNotifications(userId: number): Observable<AppNotification[]> {
+    // Assuming that your endpoint is "/user/{userId}"
+    return this.http.get<AppNotification[]>(`${this.apiUrl}/user/${userId}`).pipe(
+      tap(notifications => {
+        // Update the BehaviorSubject with the new notifications
+        this.notificationsSubject.next(notifications);
+      })
     );
-    this.notificationsSubject.next(updated);
   }
 
-  // Clears all notifications.
+  /**
+   * Mark a specific notification as read.
+   * This sends a POST request to the backend.
+   */
+  markAsRead(notificationId: number): Observable<void> {
+    // Using the endpoint defined as POST /api/notifications/{id}/read
+    return this.http.post<void>(`${this.apiUrl}/${notificationId}/read`, {});
+  }
+
+  /**
+   * Clear notifications from the local state.
+   * (Note: If you require a backend operation to clear notifications,
+   * you should add that endpoint and update this method accordingly.)
+   */
   clearNotifications(): void {
     this.notificationsSubject.next([]);
   }

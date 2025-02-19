@@ -1,12 +1,6 @@
-// notification.model.ts
 export interface AppNotification {
-  id: string;
+  id: number;
   message: string;
-  type: 'booking' | 'status' | 'system';
   read: boolean;
-  timestamp: Date;
-  data?: {
-    bookingId?: string;
-    status?: string;
-  };
+  createdAt?: string; // Should be a valid date string (ISO or parseable by JS Date)
 }

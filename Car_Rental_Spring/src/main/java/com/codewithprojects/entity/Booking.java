@@ -2,6 +2,7 @@ package com.codewithprojects.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAccessor;
 
 @Entity
 @Table(name = "bookings")
@@ -95,5 +96,8 @@ public class Booking {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+    public TemporalAccessor getBookingDate() {
+        return this.fromDate;
     }
 }

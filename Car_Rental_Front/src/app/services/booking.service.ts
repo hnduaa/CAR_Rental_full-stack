@@ -37,6 +37,11 @@ export class BookingService {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
 
+  updateBooking(booking: Booking): Observable<Booking> {
+    // URL modifiée pour correspondre à l'endpoint du backend
+    return this.http.put<Booking>(`${this.apiUrl}/edit/${booking.id}`, booking);
+  }
+  
   // Get bookings for a specific user
   getUserBookings(userId: any): Observable<Booking[]> {
     return this.http.get<Booking[]>(`${this.apiUrl}/user/${userId}`);

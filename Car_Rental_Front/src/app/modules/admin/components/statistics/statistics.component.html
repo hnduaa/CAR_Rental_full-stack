@@ -1,49 +1,83 @@
-<div class="statistics">
-    <h1>Statistics & Analytics</h1>
-  
-    <!-- KPI Cards Section -->
-    <div class="stats-cards">
-      <div class="card">
-        <h3>Total Bookings</h3>
-        <p>{{ totalBookings }}</p>
+<div class="statistics-container">
+  <div class="statistics-content">
+    <h1 class="dashboard-title">Admin Dashboard</h1>
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p class="loading-text">Loading dashboard data...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state">
+      <p class="error-title">Error</p>
+      <p class="error-message">{{ error }}</p>
+      <button (click)="loadStatistics()" class="retry-button">
+        Retry
+      </button>
+    </div>
+
+    <!-- KPI Cards -->
+    <div *ngIf="!isLoading && !error" class="kpi-grid">
+      <div class="kpi-card">
+        <h3 class="kpi-title">Total Bookings</h3>
+        <p class="kpi-value">{{ totalBookings }}</p>
+        <div class="kpi-subtitle">
+          All time bookings
+        </div>
       </div>
-      <div class="card">
-        <h3>Total Revenue</h3>
-        <p>${{ totalRevenue }}</p>
+
+      <div class="kpi-card">
+        <h3 class="kpi-title">Total Revenue</h3>
+        <p class="kpi-value">{{ totalRevenue | number:'1.0-0' }} MAD</p>
+        <div class="kpi-subtitle">
+          Cumulative earnings
+        </div>
       </div>
-      <div class="card">
-        <h3>Active Cars</h3>
-        <p>{{ activeCars }}</p>
+
+      <div class="kpi-card">
+        <h3 class="kpi-title">Active Cars</h3>
+        <p class="kpi-value">{{ activeCars }}</p>
+        <div class="kpi-subtitle">
+          Available for rental
+        </div>
       </div>
-      <div class="card">
-        <h3>Cancelled Reservations</h3>
-        <p>{{ cancelledReservations }}</p>
+
+      <div class="kpi-card">
+        <h3 class="kpi-title">Cancelled Bookings</h3>
+        <p class="kpi-value">{{ cancelledReservations }}</p>
+        <div class="kpi-subtitle">
+          Total cancellations
+        </div>
       </div>
     </div>
-  
-    <!-- Business Charts Section -->
-    <div class="charts">
-      <div class="chart">
-        <h3>Revenue Trend</h3>
+
+    <!-- Charts Section -->
+    <div *ngIf="!isLoading && !error" class="charts-grid">
+      <!-- Revenue Trend -->
+      <div class="chart-card">
+        <h3 class="chart-title">Revenue Trend</h3>
         <canvas id="revenueChart"></canvas>
       </div>
-      <div class="chart">
-        <h3>Bookings Trend</h3>
+
+      <!-- Bookings Trend -->
+      <div class="chart-card">
+        <h3 class="chart-title">Bookings Trend</h3>
         <canvas id="bookingsChart"></canvas>
       </div>
-    </div>
-  
-    <!-- User Analytics Section -->
-    <h2>User Analytics</h2>
-    <div class="user-charts">
-      <div class="chart">
-        <h3>Gender Distribution</h3>
+
+      <!-- Gender Distribution -->
+      <div class="chart-card">
+
+        <h3 class="chart-title">Gender Distribution</h3>
         <canvas id="genderChart"></canvas>
-      </div>
-      <div class="chart">
-        <h3>Age Distribution</h3>
+
+    </div>
+      <!-- Age Distribution -->
+      <div class="chart-card">
+        <h3 class="chart-title">Age Distribution</h3>
         <canvas id="ageChart"></canvas>
       </div>
     </div>
   </div>
-  
+</div>

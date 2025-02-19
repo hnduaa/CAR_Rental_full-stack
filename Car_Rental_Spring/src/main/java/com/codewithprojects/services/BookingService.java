@@ -24,7 +24,7 @@ public class BookingService {
         // but since we're using carId only in this model, you may need to set totalPrice on the front end or fetch the Car's price.
         // For now, we'll assume that the Booking passed in has enough information:
         double totalPrice = days * booking.getTotalPrice(); // Adjust as necessary.
-        booking.setTotalPrice(totalPrice);
+//        booking.setTotalPrice(totalPrice);
         return bookingRepository.save(booking);
     }
 
@@ -35,6 +35,27 @@ public class BookingService {
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
+    public Booking editBooking(Long id, Booking updatedBooking) {
+        Optional<Booking> existingBookingOpt = bookingRepository.findById(id);
+        if (existingBookingOpt.isPresent()) {
+            Booking existingBooking = existingBookingOpt.get();
+
+            System.out.println("Ancienne date de début: " + existingBooking.getFromDate());
+            System.out.println("Nouvelle date de début: " + updatedBooking.getFromDate());
+
+            // Mise à jour des champs modifiables
+            existingBooking.setFromDate(updatedBooking.getFromDate());
+            existingBooking.setToDate(updatedBooking.getToDate());
+            existingBooking.setDays(updatedBooking.getDays());
+            existingBooking.setTotalPrice(updatedBooking.getTotalPrice());
+
+            Booking savedBooking = bookingRepository.save(existingBooking);
+            System.out.println("Réservation mise à jour: " + savedBooking);
+            return savedBooking;
+        }
+        throw new RuntimeException("Booking not found");
+    }
+
 
     public Booking updateBookingStatus(Long id, String status) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);

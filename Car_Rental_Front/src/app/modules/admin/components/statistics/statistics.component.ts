@@ -1,6 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { Subject, takeUntil } from 'rxjs';
+import { StatisticsService } from '../../../../services/Statistics.service';
+
+interface StatisticsData {
+  totalBookings: number;
+  totalRevenue: number;
+  activeCars: number;
+  cancelledReservations: number;
+  genderDistribution: { [key: string]: number };
+  ageDistribution: { [key: string]: number };
+  monthlyRevenue: MonthlyData[];
+  monthlyBookings: MonthlyData[];
+}
+
+interface MonthlyData {
+  month: string;
+  value: number;
+}
 
 @Component({
   selector: 'app-statistics',
@@ -9,99 +27,166 @@ import { Chart, registerables } from 'chart.js';
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.scss']
 })
-export class StatisticsComponent implements OnInit {
-  // KPI values for overall business statistics
-  totalBookings: number = 145;
-  totalRevenue: number = 23500; // In dollars
-  activeCars: number = 34;
-  cancelledReservations: number = 7;
+export class StatisticsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  isLoading = true;
+  error: string | null = null;
 
-  // Simulated user data analytics:
-  // For Gender Distribution
-  maleUsers: number = 60;
-  femaleUsers: number = 40;
-  
-  // For Age Distribution, we group ages into categories
-  ageGroups: string[] = ['18-25', '26-35', '36-45', '46-55', '55+'];
-  ageGroupCounts: number[] = [30, 40, 20, 5, 5]; // Sample data
+  // KPI values
+  totalBookings: number = 0;
+  totalRevenue: number = 0;
+  activeCars: number = 0;
+  cancelledReservations: number = 0;
 
-  constructor() {
-    // Register all Chart.js components
+  private charts: { [key: string]: Chart } = {};
+
+  constructor(private statisticsService: StatisticsService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.loadRevenueChart();
-    this.loadBookingsChart();
-    this.loadGenderChart();
-    this.loadAgeChart();
+    this.loadStatistics();
   }
 
-  loadRevenueChart(): void {
-    const revenueCtx = document.getElementById('revenueChart') as HTMLCanvasElement;
-    new Chart(revenueCtx, {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    // Destroy all existing charts
+    Object.values(this.charts).forEach(chart => chart.destroy());
+  }
+
+  loadStatistics(): void {
+    this.isLoading = true;
+    this.error = null;
+    
+    this.statisticsService.getStatistics()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data: StatisticsData) => {
+          this.updateDashboard(data);
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error loading statistics:', err);
+          this.error = 'Failed to load dashboard data. Please try again.';
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private updateDashboard(data: StatisticsData): void {
+    // Update KPIs
+    this.totalBookings = data.totalBookings;
+    this.totalRevenue = data.totalRevenue;
+    this.activeCars = data.activeCars;
+    this.cancelledReservations = data.cancelledReservations;
+
+    // Delay chart creation to allow Angular to render the canvas elements.
+    setTimeout(() => {
+      this.createRevenueChart(data.monthlyRevenue);
+      this.createBookingsChart(data.monthlyBookings);
+      this.createGenderChart(data.genderDistribution);
+      this.createAgeChart(data.ageDistribution);
+    }, 0);
+  }
+
+  private createRevenueChart(monthlyData: MonthlyData[]): void {
+    const canvas = document.getElementById('revenueChart') as HTMLCanvasElement | null;
+    if (!canvas) {
+      console.error('Revenue chart canvas not found.');
+      return;
+    }
+    if (this.charts['revenueChart']) {
+      this.charts['revenueChart'].destroy();
+    }
+    this.charts['revenueChart'] = new Chart(canvas, {
       type: 'line',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: monthlyData.map(item => item.month),
         datasets: [{
-          label: 'Revenue ($)',
-          data: [15000, 18000, 12000, 22000, 25000, 23000],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          label: 'Monthly Revenue (MAD)',
+          data: monthlyData.map(item => item.value),
+          borderColor: 'rgb(59, 130, 246)',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
           fill: true,
-          tension: 0.3
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+          tooltip: { mode: 'index' }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => `${value} MAD`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  private createBookingsChart(monthlyData: MonthlyData[]): void {
+    const canvas = document.getElementById('bookingsChart') as HTMLCanvasElement | null;
+    if (!canvas) {
+      console.error('Bookings chart canvas not found.');
+      return;
+    }
+    if (this.charts['bookingsChart']) {
+      this.charts['bookingsChart'].destroy();
+    }
+    this.charts['bookingsChart'] = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: monthlyData.map(item => item.month),
+        datasets: [{
+          label: 'Monthly Bookings',
+          data: monthlyData.map(item => item.value),
+          backgroundColor: 'rgb(99, 102, 241)',
+          borderColor: 'rgb(79, 82, 221)',
+          borderWidth: 1
         }]
       },
       options: {
         responsive: true,
         plugins: {
           legend: { display: true }
-        }
-      }
-    });
-  }
-
-  loadBookingsChart(): void {
-    const bookingsCtx = document.getElementById('bookingsChart') as HTMLCanvasElement;
-    new Chart(bookingsCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Bookings',
-          data: [45, 55, 65, 70, 80, 90],
-          backgroundColor: 'rgba(153, 102, 255, 0.6)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
+        },
         scales: {
-          y: { beginAtZero: true }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
         }
       }
     });
   }
 
-  loadGenderChart(): void {
-    const genderCtx = document.getElementById('genderChart') as HTMLCanvasElement;
-    new Chart(genderCtx, {
-      type: 'pie',
+  private createGenderChart(genderData: { [key: string]: number }): void {
+    const canvas = document.getElementById('genderChart') as HTMLCanvasElement | null;
+    if (!canvas) {
+      console.error('Gender chart canvas not found.');
+      return;
+    }
+    if (this.charts['genderChart']) {
+      this.charts['genderChart'].destroy();
+    }
+    this.charts['genderChart'] = new Chart(canvas, {
+      type: 'doughnut',
       data: {
-        labels: ['Male', 'Female'],
+        labels: Object.keys(genderData),
         datasets: [{
-          label: 'Gender Distribution',
-          data: [this.maleUsers, this.femaleUsers],
+          data: Object.values(genderData),
           backgroundColor: [
-            'rgba(54, 162, 235, 0.6)',  // Blue for Male
-            'rgba(255, 99, 132, 0.6)'   // Red for Female
-          ],
-          borderColor: [
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 99, 132, 1)'
-          ],
-          borderWidth: 1
+            'rgb(27, 79, 163)',  // Blue
+            'rgb(129, 60, 94)'   // Pink
+          ]
         }]
       },
       options: {
@@ -113,24 +198,39 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  loadAgeChart(): void {
-    const ageCtx = document.getElementById('ageChart') as HTMLCanvasElement;
-    new Chart(ageCtx, {
+  private createAgeChart(ageData: { [key: string]: number }): void {
+    const canvas = document.getElementById('ageChart') as HTMLCanvasElement | null;
+    if (!canvas) {
+      console.error('Age chart canvas not found.');
+      return;
+    }
+    if (this.charts['ageChart']) {
+      this.charts['ageChart'].destroy();
+    }
+    this.charts['ageChart'] = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: this.ageGroups,
+        labels: Object.keys(ageData),
         datasets: [{
-          label: 'User Age Distribution',
-          data: this.ageGroupCounts,
-          backgroundColor: 'rgba(255, 159, 64, 0.6)',
-          borderColor: 'rgba(255, 159, 64, 1)',
+          label: 'Users by Age Group',
+          data: Object.values(ageData),
+          backgroundColor: 'rgb(234, 88, 12)',
+          borderColor: 'rgb(214, 68, 0)',
           borderWidth: 1
         }]
       },
       options: {
         responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
         scales: {
-          y: { beginAtZero: true }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
         }
       }
     });

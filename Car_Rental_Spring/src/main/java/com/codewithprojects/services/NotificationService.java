@@ -1,35 +1,65 @@
 package com.codewithprojects.services;
 
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import com.codewithprojects.entity.Notification;
+import com.codewithprojects.enums.NotificationType;
+import com.codewithprojects.repository.NotificationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class NotificationService {
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
+    private NotificationRepository notificationRepository;
 
-    public NotificationService(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
+    /**
+     * Creates a new notification.
+     * @param userId the ID of the user to notify (use null for admin notifications)
+     * @param message the notification message
+     * @param type the type of notification
+     */
+    public void createNotification(Long userId, String message, NotificationType type) {
+        Notification notification = new Notification();
+
+        // If userId is null, set it to admin's ID (which is 1)
+        if (userId == null) {
+            notification.setUserId(1L);  // Set the admin's ID here
+        } else {
+            notification.setUserId(userId);
+        }
+
+        notification.setMessage(message);
+        notification.setType(type);
+        notificationRepository.save(notification);
     }
 
     /**
-     * Sends a generic system notification to all subscribers of the /topic/system channel.
+     * Retrieves notifications for a specific user.
+     * @param userId the user's ID
+     * @return list of notifications
      */
-    public void sendNotification(String message) {
-        simpMessagingTemplate.convertAndSend("/topic/system", message);
+    public List<Notification> getNotificationsForUser(Long userId) {
+        return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
     /**
-     * Sends a notification to a specific user. The user receives this on the /queue/notifications channel.
+     * Retrieves admin notifications (notifications where userId is null).
+     * @return list of admin notifications
      */
-    public void sendNotificationToUser(String userId, String message) {
-        simpMessagingTemplate.convertAndSendToUser(userId, "/queue/notifications", message);
+    public List<Notification> getAdminNotifications() {
+        return notificationRepository.findByUserIdIsNullOrderByCreatedAtDesc();
     }
 
     /**
-     * Sends a notification to all admins on the /topic/admin-notifications channel.
+     * Marks a notification as read.
+     * @param id the notification ID
      */
-    public void sendNotificationToAdmin(String message) {
-        simpMessagingTemplate.convertAndSend("/topic/admin-notifications", message);
+    public void markAsRead(Long id) {
+        Notification notification = notificationRepository.findById(id).orElse(null);
+        if (notification != null) {
+            notification.setRead(true);
+            notificationRepository.save(notification);
+        }
     }
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b20bab73-71b8-4a20-a369-68c78f413234" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/StatisticsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/dto/StatisticsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/Notification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/enums/NotificationType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/model/DashboardStats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/repository/NotificationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/components/booking-list/booking-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/components/booking-list/booking-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/components/booking-list/booking-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/components/booking-list/booking-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/components/notifications.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/models/notification.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/models/notification.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/admin-notifications.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/post-car/post-car.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/post-car/post-car.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/admin/components/statistics/statistics.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/customer-dashboard/customer-dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/customer-dashboard/customer-dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/customer-dashboard/customer-dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/customer-dashboard/customer-dashboard.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/customer-notifications.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/mybooking/mybooking.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/mybooking/mybooking.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/mybooking/mybooking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/modules/customer/components/mybooking/mybooking.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/rx-stomp.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/WebSocket.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/booking.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/booking.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/car.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/car.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/notification.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/notification.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/rating.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/rating.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/app/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/custom-typings.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Front/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Front/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/configuration/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/configuration/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/RatingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/repository/BookingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Car_Rental_Spring/src/main/java/com/codewithprojects/services/UserService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2tGQNdz5yXLJgw8MVPFfNnrL7Sv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b20bab73-71b8-4a20-a369-68c78f413234" name="Changes" comment="" />
+      <created>1739975908030</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739975908030</updated>
+    </task>
+    <servers />
+  </component>
+</project>
