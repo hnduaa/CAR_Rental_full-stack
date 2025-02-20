@@ -9,12 +9,13 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { UserService } from '../../services/user.service';  // <-- Import UserService
 import { MatIconModule } from '@angular/material/icon';
 import { EditBookingDialogComponent } from './edit-booking-dialog.component';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-booking-list',
   templateUrl: './booking-list.component.html',
   styleUrls: ['./booking-list.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule,FormsModule,]
 })
 export class BookingListComponent implements OnInit {
   @Input() isAdmin: boolean = false; // Accept role from parent component

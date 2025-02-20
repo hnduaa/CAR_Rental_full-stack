@@ -1,1 +1,40 @@
+<div *ngIf="topRatedCars.length > 0; else noCars" class="car-carousel">
+    <h2 class="titles">Top Rated Cars</h2>
+    <div class="car-list">
+      <mat-card *ngFor="let car of topRatedCars" class="car-card">
+        <div class="car-image-container">
+          <img [src]="'http://localhost:8080/api/cars/image/' + (car.imagePath || 'default-car.png')"
+               alt="{{ car.carName }}"
+               class="car-image"
+               (error)="handleImageError($event)" />
+        </div>
+  
+        <mat-card-content class="car-text">
+          <mat-card-title>{{ car.carName }}</mat-card-title>
+          <mat-card-subtitle>{{ car.brandName }} - {{ car.carType }}</mat-card-subtitle>
+          <p>{{ car.description }}</p>
+  
+          <div class="car-details">
+            <p><strong>Transmission:</strong> {{ car.transmission }}</p>
+            <p><strong>Price per day:</strong> ${{ car.pricePerDay }}</p>
+            <p><strong>Model Year:</strong> {{ car.modelYear }}</p>
+          </div>
+  
+
+        </mat-card-content>
+        
+
+      </mat-card>
+    </div>
+    
 <app-booking-list [isAdmin]="false"></app-booking-list>
+  </div>
+  
+  <ng-template #noCars>
+    <p>No top-rated cars available.</p>
+  </ng-template>
+  
+
+  
+
+

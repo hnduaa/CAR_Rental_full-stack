@@ -1,4 +1,6 @@
-// Keyframe for fadeInUp animation
+// ---------------------------------------------------
+// 1. Keyframe for fadeInUp animation
+// ---------------------------------------------------
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -10,18 +12,23 @@
   }
 }
 
-// Utility class for fade-in effect
+// ---------------------------------------------------
+// 2. Utility class for fade-in effect
+// ---------------------------------------------------
 .fade-in {
   opacity: 0;
   animation: fadeInUp 1s ease forwards;
 }
 
-/* Navbar */
+// ---------------------------------------------------
+// 3. Navbar (Bright, Elegant, and Colorful)
+// ---------------------------------------------------
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #002766;
+  /* A bright, elegant gradient reflecting the sky/car color theme */
+  background: linear-gradient(90deg, #1c6dd0 0%,    #3d7ac499 100%);
   padding: 1rem 2rem;
   color: #fff;
 
@@ -41,31 +48,41 @@
       padding: 0.5rem 1rem;
       border: 1px solid #fff;
       border-radius: 5px;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
 
       &:hover {
-        background-color: #1890ff;
-        border-color: #1890ff;
+        /* Slightly darker pink on hover */
+        background-color: #1f4068;
+        border-color: #1f4068;
       }
     }
   }
 }
 
-/* Hero Section */
+// ---------------------------------------------------
+// 4. Hero Section (BMW i8 image + Colorful Overlay)
+// ---------------------------------------------------
 .hero-section {
   position: relative;
   min-height: 600px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/hero-bg.jpg');
+  /* Overlay using the car's blue and sky’s pink/orange as a gradient */
+  background-image: linear-gradient(
+      #3d7ac499,
+      #1f4068
+    ),
+    url('/car2.jpg');
   background-size: cover;
   background-position: center;
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    /* Adjust overlay alpha if you need more/less visibility of the car */
+    background: rgba(0, 0, 0, 0.1);
   }
 
   .hero-content {
@@ -80,16 +97,21 @@
       font-size: 3.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      /* Subtle shadow for readability */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .hero-description {
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
   }
 }
 
-/* About Our Service Section */
+// ---------------------------------------------------
+// 5. About Our Service Section
+// ---------------------------------------------------
 .about-section {
   padding: 4rem 1rem;
   background: #f9fafb;
@@ -114,7 +136,9 @@
   }
 }
 
-/* Benefits Section */
+// ---------------------------------------------------
+// 6. Benefits Section
+// ---------------------------------------------------
 .benefits-section {
   padding: 4rem 1rem;
   background: #fff;
@@ -166,10 +190,13 @@
   }
 }
 
-/* Call to Action Section */
+// ---------------------------------------------------
+// 7. Call to Action Section
+// ---------------------------------------------------
 .cta-section {
   padding: 4rem 1rem;
-  background: #2563eb;
+  /* A gentle gradient that ties in the pink/blue theme */
+  background: linear-gradient(135deg, #1c6dd0 0%,    #3d7ac499 100%);
   color: #fff;
   text-align: center;
 
@@ -182,6 +209,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
 
   p {
@@ -192,26 +220,27 @@
   .cta-btn {
     padding: 1rem 2rem;
     background: #fff;
-    color: #2563eb;
+    color: #1c6dd0;
     border: none;
     border-radius: 0.375rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease-in-out;
 
     &:hover {
-      background: #f3f4f6;
+      background: #f9fafb;
     }
   }
 }
 
-/* Shared Section Container */
+// ---------------------------------------------------
+// 8. Shared Section Container & Title
+// ---------------------------------------------------
 .section-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Section Title */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -219,7 +248,9 @@
   margin-bottom: 2rem;
 }
 
-/* Responsive Design */
+// ---------------------------------------------------
+// 9. Responsive Design
+// ---------------------------------------------------
 @media (max-width: 768px) {
   .hero-content h1 {
     font-size: 2.5rem;

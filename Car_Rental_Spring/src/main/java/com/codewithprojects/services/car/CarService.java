@@ -33,6 +33,7 @@ public class CarService {
             return null;
         }
     }
+    public List<Car> getTopRatedCars() {return carRepository.findTopRatedCars();}
 
     // Get all cars
     public List<Car> getAllCars() {

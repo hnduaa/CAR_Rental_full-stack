@@ -170,4 +170,11 @@ public class CarController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/top-rated")
+    public ResponseEntity<List<Car>> getTopRatedCars() {
+        List<Car> topRatedCars = carService.getTopRatedCars();
+        return new ResponseEntity<>(topRatedCars, HttpStatus.OK);
+    }
+
 }

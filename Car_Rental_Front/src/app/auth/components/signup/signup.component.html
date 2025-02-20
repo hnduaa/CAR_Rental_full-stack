@@ -14,9 +14,9 @@
           [ngClass]="{'invalid': submitted && f['firstName'].errors}"
         />
         <div *ngIf="submitted && f['firstName'].errors" class="error-message">
-          <small *ngIf="f['firstName'].errors['required']">First name is required</small>
-          <small *ngIf="f['firstName'].errors['minlength']">Must be at least 2 characters</small>
-          <small *ngIf="f['firstName'].errors['pattern']">Only letters allowed</small>
+          <small *ngIf="f['firstName'].errors['required']">Required</small>
+          <small *ngIf="f['firstName'].errors['minlength']">Min 2 chars</small>
+          <small *ngIf="f['firstName'].errors['pattern']">Letters only</small>
         </div>
       </div>
 
@@ -30,113 +30,114 @@
           [ngClass]="{'invalid': submitted && f['lastName'].errors}"
         />
         <div *ngIf="submitted && f['lastName'].errors" class="error-message">
-          <small *ngIf="f['lastName'].errors['required']">Last name is required</small>
-          <small *ngIf="f['lastName'].errors['minlength']">Must be at least 2 characters</small>
-          <small *ngIf="f['lastName'].errors['pattern']">Only letters allowed</small>
+          <small *ngIf="f['lastName'].errors['required']">Required</small>
+          <small *ngIf="f['lastName'].errors['minlength']">Min 2 chars</small>
+          <small *ngIf="f['lastName'].errors['pattern']">Letters only</small>
         </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
-      <input
-        type="text"
-        id="phoneNumber"
-        formControlName="phoneNumber"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && f['phoneNumber'].errors}"
-      />
-      <div *ngIf="submitted && f['phoneNumber'].errors" class="error-message">
-        <small *ngIf="f['phoneNumber'].errors?.['required']">Phone number is required</small>
-        <small *ngIf="f['phoneNumber'].errors?.['pattern']">Invalid phone number format</small>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && f['email'].errors}"
+        />
+        <div *ngIf="submitted && f['email'].errors" class="error-message">
+          <small *ngIf="f['email'].errors['required']">Required</small>
+          <small *ngIf="f['email'].errors['email']">Invalid email</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && f['phoneNumber'].errors}"
+        />
+        <div *ngIf="submitted && f['phoneNumber'].errors" class="error-message">
+          <small *ngIf="f['phoneNumber'].errors?.['required']">Required</small>
+          <small *ngIf="f['phoneNumber'].errors?.['pattern']">Invalid format</small>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && f['email'].errors}"
-      />
-      <div *ngIf="submitted && f['email'].errors" class="error-message">
-        <small *ngIf="f['email'].errors['required']">Email is required</small>
-        <small *ngIf="f['email'].errors['email']">Invalid email format</small>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && f['password'].errors}"
+        />
+        <div *ngIf="submitted && f['password'].errors" class="error-message">
+          <small *ngIf="f['password'].errors['required']">Required</small>
+          <small *ngIf="f['password'].errors['minlength']">Min 8 chars</small>
+          <small *ngIf="f['password'].errors['passwordStrength']">Include: A-Z, a-z, 0-9, symbol</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch'])}"
+        />
+        <div *ngIf="submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch'])" class="error-message">
+          <small *ngIf="f['confirmPassword'].errors?.['required']">Required</small>
+          <small *ngIf="signupForm.errors?.['passwordMismatch']">Passwords must match</small>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && f['password'].errors}"
-      />
-      <div *ngIf="submitted && f['password'].errors" class="error-message">
-        <small *ngIf="f['password'].errors['required']">Password is required</small>
-        <small *ngIf="f['password'].errors['minlength']">Must be at least 8 characters</small>
-        <small *ngIf="f['password'].errors['passwordStrength']">
-          Password must include uppercase, lowercase, number, and special character
-        </small>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select
+          id="gender"
+          formControlName="gender"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && f['gender'].errors}"
+        >
+          <option value="">Select Gender</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+        </select>
+        <div *ngIf="submitted && f['gender'].errors" class="error-message">
+          <small *ngIf="f['gender'].errors['required']">Required</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input
+          type="number"
+          id="age"
+          formControlName="age"
+          class="form-input"
+          [ngClass]="{'invalid': submitted && f['age'].errors}"
+          min="18" max="100"
+        />
+        <div *ngIf="submitted && f['age'].errors" class="error-message">
+          <small *ngIf="f['age'].errors['required']">Required</small>
+          <small *ngIf="f['age'].errors['min']">Must be 18+</small>
+          <small *ngIf="f['age'].errors['max']">Must be ≤100</small>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        formControlName="confirmPassword"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch'])}"
-      />
-      <div *ngIf="submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch'])" class="error-message">
-        <small *ngIf="f['confirmPassword'].errors?.['required']">Please confirm your password</small>
-        <small *ngIf="signupForm.errors?.['passwordMismatch']">Passwords do not match</small>
-      </div>
-    </div>
-
-    <!-- Gender -->
-    <div class="form-group">
-      <label for="gender">Gender</label>
-      <select
-        id="gender"
-        formControlName="gender"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && f['gender'].errors}"
-      >
-        <option value="">Select Gender</option>
-        <option value="MALE">Male</option>
-        <option value="FEMALE">Female</option>
-      </select>
-      <div *ngIf="submitted && f['gender'].errors" class="error-message">
-        <small *ngIf="f['gender'].errors['required']">Gender is required</small>
-      </div>
-    </div>
-
-    <!-- Age -->
-    <div class="form-group">
-      <label for="age">Age</label>
-      <input
-        type="number"
-        id="age"
-        formControlName="age"
-        class="form-input"
-        [ngClass]="{'invalid': submitted && f['age'].errors}"
-        min="18" max="100"
-      />
-      <div *ngIf="submitted && f['age'].errors" class="error-message">
-        <small *ngIf="f['age'].errors['required']">Age is required</small>
-        <small *ngIf="f['age'].errors['min']">Age must be at least 18</small>
-        <small *ngIf="f['age'].errors['max']">Age must be less than or equal to 100</small>
-      </div>
-    </div>
-
-    <!-- Terms -->
     <div class="form-group checkbox">
       <input
         type="checkbox"
@@ -148,7 +149,7 @@
         I agree to the Terms of Service and Privacy Policy
       </label>
       <div *ngIf="submitted && f['termsAccepted'].errors" class="error-message">
-        <small>You must accept the terms and conditions</small>
+        <small>Terms acceptance required</small>
       </div>
     </div>
 

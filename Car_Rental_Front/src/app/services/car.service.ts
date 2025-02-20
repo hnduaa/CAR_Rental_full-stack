@@ -1,4 +1,3 @@
-//car.service
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,6 +17,13 @@ export class CarService {
   getAllCars(): Observable<Car[]> {
     return this.http.get<Car[]>(`${this.apiUrl}/all`, { withCredentials: true });
   }
+
+  // Get top-rated cars
+// car.service.ts
+getTopRatedCars(): Observable<Car[]> {
+  return this.http.get<Car[]>(`${this.apiUrl}/top-rated`, { withCredentials: true });
+}
+
 
   // Get car by ID
   getCarById(id: number): Observable<Car> {

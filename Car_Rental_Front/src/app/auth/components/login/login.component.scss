@@ -1,180 +1,176 @@
+/* =========================================
+   Elegant Login Page Styling
+   ========================================= */
+
+/* Overall container styling with a soft pastel backdrop */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e6f0fa;  /* Soft pastel blue */
+  font-family: 'Helvetica Neue', sans-serif;
+  padding: 20px;
+}
+
+/* Login form container with a modern, elevated look */
+.login-form {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative accent stripe at the top for a modern touch */
+.login-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #1c6dd0, #f28ea0);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Heading styles */
+.login-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Subtitle styling */
+.login-form .subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+/* Error banner for login errors */
+.error-banner {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Form group container */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Labels for form fields */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Input field styling */
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1c6dd0;
+  box-shadow: 0 0 8px rgba(28, 109, 208, 0.2);
+}
+
+/* Password group container */
+.password-group {
+  position: relative;
+}
+
+/* Password field wrapper (if needed for extra spacing) */
+.password-wrapper {
+  position: relative;
+}
+
+/* Toggle password button */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #1c6dd0;
+}
+
+/* Error message styling */
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
+
+/* Highlight invalid fields */
+.invalid {
+  border-color: #d32f2f !important;
+}
+
+/* Login button styling */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #1c6dd0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #1667a3;
+  transform: translateY(-2px);
+}
+
+/* Signup link styling */
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #1c6dd0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .login-form {
     padding: 20px;
   }
-  
-  .login-form {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-  }
-  
-  .login-form h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .login-form .subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 25px;
-  }
-  
-  .error-banner {
-    background-color: #ffebee;
-    color: #d32f2f;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    position: relative;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .form-group input:focus {
-    outline: none;
-    border-color: #4CAF50;
-  }
-  
-  .password-group {
-    position: relative;
-  }
-  
-  .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 35px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  
-  .error-message {
-    color: #d32f2f;
-    font-size: 0.8em;
-    margin-top: 5px;
-  }
-  
-  .invalid {
-    border-color: #d32f2f !important;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-  }
-  
-  .forgot-password-btn {
-    background: none;
-    border: none;
-    color: #4CAF50;
-    cursor: pointer;
-    font-size: 0.9em;
-  }
-  
-  .login-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-btn:hover {
-    background-color: #45a049;
-  }
-  
-  .signup-link {
-    text-align: center;
-    margin-top: 15px;
-    color: #666;
-  }
-  
-  .signup-link a {
-    color: #4CAF50;
-    text-decoration: none;
-  }
-  
-  .signup-link a:hover {
-    text-decoration: underline;
-  }
-  
-  .social-login {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .social-login p {
-    color: #666;
-    margin-bottom: 15px;
-  }
-  
-  .social-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-  
-  .social-buttons button {
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .google-btn {
-    color: #db4437;
-  }
-  
-  .facebook-btn {
-    color: #3b5998;
-  }
-  
-  .social-buttons button:hover {
-    background-color: #f4f4f4;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 480px) {
-    .login-form {
-      padding: 20px;
-    }
-  
-    .social-buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
+}

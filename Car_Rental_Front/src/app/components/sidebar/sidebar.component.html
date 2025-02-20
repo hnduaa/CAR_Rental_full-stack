@@ -6,10 +6,16 @@
     <ul class="menu">
       <!-- Admin Menu -->
       <ng-container *ngIf="userRole === 'ADMIN'">
-        <li>
+        <!-- <li>
           <a routerLink="/admin/dashboard" routerLinkActive="active" class="menu-item">
             <i class="fas fa-home icon"></i>
             <span class="text" *ngIf="!isCollapsed">Dashboard</span>
+          </a>
+        </li> -->
+        <li>
+          <a routerLink="/admin/dashboard" routerLinkActive="active" class="menu-item">
+            <i class="fas fa-calendar-check icon"></i>  
+            <span class="text" *ngIf="!isCollapsed">Reservations</span>
           </a>
         </li>
         <li>
@@ -36,12 +42,7 @@
               <span class="text" *ngIf="!isCollapsed">Brand Statistics</span>
             </a>
           </li>
-            <li>
-              <a routerLink="/admin/reservations" routerLinkActive="active" class="menu-item">
-                <i class="fas fa-calendar-check icon"></i>  
-                <span class="text" *ngIf="!isCollapsed">Reservations Management</span>
-              </a>
-            </li>
+
             
           <div class="logout">
             <a routerLink="/login" routerLinkActive="active" class="menu-item">
