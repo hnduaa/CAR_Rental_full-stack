@@ -15,7 +15,7 @@ public class NotificationService {
 
     /**
      * Creates a new notification.
-     * @param userId the ID of the user to notify (use null for admin notifications)
+     * @param userId
      * @param message the notification message
      * @param type the type of notification
      */

@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         // Save user to the database
         User createdUser = userRepository.save(user);
 
-        // ✅ Map to UserDto with all fields
+
         return new UserDto(
                 createdUser.getId(),
                 createdUser.getFirstname(),
